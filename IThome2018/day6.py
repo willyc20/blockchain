@@ -144,7 +144,7 @@ def thread_pow(block_unpow):
     if block_pow != None:
         lock.acquire()
         # 為了簡化流程
-        # 這裡有人開始廣播就了其他算完的執行緒就停了
+        # 這裡有人開始廣播其他算完的執行緒就停了
         if done != True:          
             done = True
             broadcast(block_pow)
