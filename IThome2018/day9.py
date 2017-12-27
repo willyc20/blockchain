@@ -56,7 +56,7 @@ class BTPeer:
         Internet host like Google.
 
         """
-        self.debug = 0
+        self.debug = 1
 
         self.maxpeers = int(maxpeers)
         self.serverport = int(serverport)
@@ -358,17 +358,14 @@ class BTPeer:
             'timestamp': int(time.time()), 
             'Txs': [
                 {
-                    'out1_vk': vk.to_pem(),
-                    'out2_vk': '',
+                    'owner_vk': vk.to_pem(),
                     'preowner_vk': '',
-                    'out1_value': 100,
-                    'out2_value': '',
+                    'data': 100,
                     'signature': ''
-                }
-        
+                }           
             ]
-        }
-         
+        }       
+
         print('挖礦賺錢囉!')
         self.proof_of_work(block)
 
@@ -395,6 +392,7 @@ class BTPeer:
         for j in range(len(self.blockchain)):
             for k in range(len(self.blockchain[j]['Txs'])):
                 for l in range(len(new_block['Txs'])):
+                    # 第一筆交易是挖礦獎勵 可以沒有支付者
                     if l == 0:
                         continue
                     if self.blockchain[j]['Txs'][k]['preowner_vk'].decode('utf-8') == new_block['Txs'][l]['preowner_vk'].decode('utf-8'):
